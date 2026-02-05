@@ -12,7 +12,7 @@ const int MQTT_PORT = 1883;
 const char* MQTT_ID = "ESP32Client";
 
 // MQTT Topic
-const char* MQTT_TOPIC = "smartRoom/HelloWorld";
+const char* MQTT_TOPIC = "chambre/esp32-01/sensor/state";
 
 WiFiClient espClient;
 PubSubClient mqttClient(espClient);
