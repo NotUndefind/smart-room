@@ -1,0 +1,10 @@
+{
+	"type": "sensor",
+	"device": "esp32-01",
+	"isLive": true,
+	"data": {
+		"temperature": 22.5,
+		"humidity": 45
+	},
+	"timestamp": 1699999999
+}
