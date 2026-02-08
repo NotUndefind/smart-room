@@ -23,7 +23,7 @@ async def hello(websocket):
     try:
         while True:
             await websocket.send(json.dumps(payload))
-            await asyncio.sleep(5)
+            await asyncio.sleep(1)
     finally:
         clients.remove(websocket)
 

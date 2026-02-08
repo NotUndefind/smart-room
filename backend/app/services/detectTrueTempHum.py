@@ -1,10 +1,11 @@
 import asyncio
+import json
 import time
 
 import aiomqtt
 from services.mock import fakeData
 
-topic = "chambre/esp32-01/sensor/state"
+topic = "chambre/sensor/esp32-01/state"
 payload = {
     "type": "sensor",
     "device": "esp32-01",
@@ -25,9 +26,18 @@ async def detectTrueData():
                         message = await asyncio.wait_for(
                             client.messages.__anext__(), timeout=10
                         )
-                        print(message.payload)
-                        payload["data"]["temperature"] = message.payload.decode()
-                        payload["data"]["humidity"] = message.payload.decode()
+                        print(json.loads(message.payload.decode()))
+                        json_data = json.loads(message.payload.decode())
+                        if (
+                            json_data["temperature"] is None
+                            or json_data["humidity"] is None
+                        ):
+                            print("Données manquantes reçues. Marquage comme non live.")
+                            payload["isLive"] = False
+                            await fakeData(payload)
+                            continue
+                        payload["data"]["temperature"] = json_data["temperature"]
+                        payload["data"]["humidity"] = json_data["humidity"]
                         payload["timestamp"] = int(time.time())
                         payload["isLive"] = True
                     except asyncio.TimeoutError:

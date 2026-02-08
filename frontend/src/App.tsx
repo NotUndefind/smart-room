@@ -47,6 +47,7 @@ function App() {
           };
           setSensor(entry);
           setHistory((prev) => [entry, ...prev].slice(0, 20));
+          console.log("Received data:", payload);
         } catch {
           console.error("Failed to parse message:", event.data);
         }
@@ -525,10 +526,7 @@ function DataHistory({
                 </div>
               </div>
               <div className="flex items-center gap-3">
-                <span
-                  className="text-xs"
-                  style={{ color: "var(--stone-600)" }}
-                >
+                <span className="text-xs" style={{ color: "var(--stone-600)" }}>
                   {entry.payload.device}
                 </span>
                 <span
